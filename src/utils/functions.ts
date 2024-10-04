@@ -1,3 +1,5 @@
+import { JsonObject } from "./types";
+
 export const generateRandomString = (
   length: number,
   duplicate = true,
@@ -27,4 +29,105 @@ export const generateRandomString = (
     result += char;
   }
   return result;
+};
+
+export function groupByHour(
+  data: {
+    x: Date;
+    y: number;
+  }[]
+) {
+  const result: {
+    x: Date;
+    y: number;
+  }[] = [];
+  data.forEach((item) => {
+    const last = result[result.length - 1];
+    const date: Date = new Date(item.x);
+    date.setMinutes(0, 0, 0);
+    if (!last || new Date(last.x).getTime() !== date.getTime()) {
+      result.push({
+        x: date,
+        y: item.y,
+      });
+    }
+    if (last && new Date(last.x).getTime() === date.getTime()) {
+      last.y += item.y;
+    }
+  });
+  return result;
+}
+
+export function groupByDay(
+  data: {
+    x: Date;
+    y: number;
+  }[]
+) {
+  const result: {
+    x: Date;
+    y: number;
+  }[] = [];
+  data.forEach((item) => {
+    const last = result[result.length - 1];
+    const date: Date = new Date(item.x);
+    date.setHours(0, 0, 0, 0);
+    if (!last || new Date(last.x).getTime() !== date.getTime()) {
+      result.push({
+        x: date,
+        y: item.y,
+      });
+    }
+    if (last && new Date(last.x).getTime() === date.getTime()) {
+      last.y += item.y;
+    }
+  });
+  return result;
+}
+
+export function groupByWeek(
+  data: {
+    x: Date;
+    y: number;
+  }[]
+) {
+  const result: {
+    x: Date;
+    y: number;
+  }[] = [];
+  data.forEach((item) => {
+    const last = result[result.length - 1];
+    const date: Date = new Date(item.x);
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() - date.getDay());
+    if (!last || new Date(last.x).getTime() !== date.getTime()) {
+      result.push({
+        x: date,
+        y: item.y,
+      });
+    }
+    if (last && new Date(last.x).getTime() === date.getTime()) {
+      last.y += item.y;
+    }
+  });
+  return result;
+}
+
+export const flatten = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  obj: any,
+  parentKey = "",
+  res: JsonObject = {},
+  sep: string = "."
+) => {
+  for (const key in obj) {
+    const propName = parentKey ? `${parentKey}${sep}${key}` : key;
+    if (typeof obj[key] === "object" && !Array.isArray(obj[key])) {
+      res[propName] = obj[key];
+      flatten(obj?.[key], propName, res, sep);
+    } else {
+      res[propName] = obj[key];
+    }
+  }
+  return res;
 };

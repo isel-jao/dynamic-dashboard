@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { useGridStore } from "../../grid-store";
 import { useAddWidgetStore } from "../../widget-store";
 import { cn } from "@/lib/utils";
+import LineChartWidget from "../line-chart-widget";
 // import VideoWidget from "../video-widget";
 // import CardWidget from "../card-widget";
 // import GaugeWidget from "../gauge-widget";
@@ -64,7 +65,7 @@ export default function WidgetContent({ item }: Props) {
   const Comp = useCallback(() => {
     // if (item.type === "areaChart") return <AreaChartWidget {...item} />;
     // if (item.type === "barChart") return <BarChartWidget {...item} />;
-    // if (item.type === "lineChart") return <LineChartWidget {...item} />;
+    if (item.type === "lineChart") return <LineChartWidget {...item} />;
     // if (item.type === "pieChart")
     //   return WithHeader(<PieChartWidget {...item} />, item.title);
     // if (item.type === "donutChart")

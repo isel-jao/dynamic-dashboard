@@ -12,6 +12,8 @@ export const widgetTypes = [
 
 export const widgetCardTypes = ["text", "telemetry"] as const;
 
+export const groupByOptions = ["hour", "day", "week", "none"] as const;
+
 export type Literal = string | number | boolean | null | Date;
 
 export type JsonValue = Literal | JsonArray | JsonObject;
@@ -59,3 +61,5 @@ export type WidgetCardType = (typeof widgetCardTypes)[number];
 export type LineChartWidgetData = {
   telemetries?: ChartTelemetry[];
 };
+
+export type TGroupBy = (typeof groupByOptions)[number];

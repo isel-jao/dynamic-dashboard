@@ -77,5 +77,11 @@ export default {
       },
     },
   },
+  safelist: [
+    {
+      pattern: /^(col|row)-(span|start|end)-(.+)$/,
+      variants: ["sm", "md", "lg", "xl", "2xl"],
+    },
+  ],
   plugins: [require("tailwindcss-animate")],
 };
