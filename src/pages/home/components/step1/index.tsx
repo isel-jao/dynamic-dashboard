@@ -3,11 +3,11 @@ import { Input } from "@/components/ui/input";
 import WidgetLogo from "../widget-logo";
 import { useAddWidgetStore } from "../../widget-store";
 import { useGridStore } from "../../grid-store";
-import { Textarea } from "@/components/ui/textarea";
 import WidgetTypeSelector from "../widget-type-selector";
+import { Textarea } from "@/components/ui/textarea";
 
 export function Step1() {
-  const { data, setTitle, setDescription } = useAddWidgetStore();
+  const { data, setTitle, setApiUrl, setToken } = useAddWidgetStore();
   const { widgetId } = useGridStore();
   return (
     <div className="place-content-center ">
@@ -19,15 +19,22 @@ export function Step1() {
         value={data.title}
         onChange={(e) => setTitle(e.target.value)}
       />
+      <Label className="inline-block mt-4">api url</Label>
+      <Input
+        id="apiUrl"
+        name="apiUrl"
+        value={data.apiUrl}
+        onChange={(e) => setApiUrl(e.target.value)}
+      />
+
       <Label className="inline-block mt-4">
-        {/* {t("description")} <span className="text-gray-400">({t("optional")})</span> */}
-        description <span className="text-gray-400">(optional)</span>
+        token <span className="text-xs">(optional)</span>
       </Label>
       <Textarea
-        id="description"
-        name="description"
-        value={data.description}
-        onChange={(e) => setDescription(e.target.value)}
+        id="token"
+        name="token"
+        value={data.token}
+        onChange={(e) => setToken(e.target.value)}
       />
       <Label className="mt-4 inline-block">charType</Label>
       {widgetId == "new" ? (

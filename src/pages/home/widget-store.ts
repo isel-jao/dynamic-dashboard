@@ -21,11 +21,11 @@ type Actions = {
   setType: (type: WidgetType) => void;
   addTelemetry: (data: ChartTelemetry) => void;
   deleteTelemetry: (telemetry: ChartTelemetry) => void;
-  //   addStop: (stop: number, color: string) => void;
-  //   deleteStop: (index: number) => void;
   nextStep: () => void;
   getDisabled: () => boolean;
   setAttribute: (key: string, value: JsonValue) => void;
+  setApiUrl: (apiUrl: string) => void;
+  setToken: (token: string) => void;
 };
 
 export const useAddWidgetStore = create<State & Actions>((set, get) => ({
@@ -33,6 +33,8 @@ export const useAddWidgetStore = create<State & Actions>((set, get) => ({
     title: "",
     type: "card",
     attributes: {},
+    apiUrl: "https://api.cloud.digieye.io/api/history",
+    token: "",
   },
   step: 0,
   setData: (data: Omit<Widget, "id">) => {
@@ -70,7 +72,7 @@ export const useAddWidgetStore = create<State & Actions>((set, get) => ({
     const telemetries = (get().data.attributes?.telemetries ||
       []) as ChartTelemetry[];
     const exist = telemetries.find(
-      (item) => item.cameraId === data.cameraId && item.name === data.name
+      (item) => item.serial === data.serial && item.name === data.name
     );
     if (exist) return;
     const newTelemetries = [...telemetries, data];
@@ -88,8 +90,7 @@ export const useAddWidgetStore = create<State & Actions>((set, get) => ({
     const telemetries = (get().data.attributes?.telemetries ||
       []) as ChartTelemetry[];
     const newTelemetries = telemetries.filter(
-      (item) =>
-        item.cameraId !== telemetry.cameraId || item.name !== telemetry.name
+      (item) => item.serial !== telemetry.serial || item.name !== telemetry.name
     );
     set({
       data: {
@@ -104,15 +105,17 @@ export const useAddWidgetStore = create<State & Actions>((set, get) => ({
   nextStep: () => {
     const step = get().step;
     const title = get().data.title;
-    if (step === 1 || !title) return;
+    const apiUrl = get().data.apiUrl;
+    if (step === 1 || !title || !apiUrl) return;
     set({ step: step + 1 });
   },
   getDisabled: () => {
     const step = get().step;
     const title = get().data.title;
+    const apiUrl = get().data.apiUrl;
     const type = get().data.type;
     const telemetries = get().data.attributes?.telemetries as ChartTelemetry[];
-    if (!title) return true;
+    if (!title || !apiUrl) return true;
     if (
       step === 1 &&
       ["lineChart", "barChart", "areaChart"].includes(type) &&
@@ -132,8 +135,8 @@ export const useAddWidgetStore = create<State & Actions>((set, get) => ({
     }
     if (step === 1 && type === "gauge") {
       const gaugeData = get().data.attributes as GaugeWidgetData;
-      const { cameraId, telemetryName, stops } = gaugeData;
-      return !cameraId || !telemetryName || !stops || !stops.length;
+      const { serial, telemetryName, stops } = gaugeData;
+      return !serial || !telemetryName || !stops || !stops.length;
     }
 
     return false;
@@ -146,6 +149,22 @@ export const useAddWidgetStore = create<State & Actions>((set, get) => ({
           ...get().data.attributes,
           [key]: value,
         },
+      },
+    });
+  },
+  setApiUrl: (apiUrl: string) => {
+    set({
+      data: {
+        ...get().data,
+        apiUrl,
+      },
+    });
+  },
+  setToken: (token: string) => {
+    set({
+      data: {
+        ...get().data,
+        token,
       },
     });
   },

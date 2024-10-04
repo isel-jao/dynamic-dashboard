@@ -27,6 +27,8 @@ export type Widget = {
   type: WidgetType;
   description?: string;
   attributes?: JsonObject;
+  apiUrl: string;
+  token?: string;
 };
 
 export type DateRange = {

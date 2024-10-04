@@ -25,6 +25,7 @@ const AddWidgetDialog = () => {
       title: "",
       type: "card",
       attributes: {},
+      apiUrl: "https://api.cloud.digieye.io/api/history",
     });
     setStep(0);
   };
