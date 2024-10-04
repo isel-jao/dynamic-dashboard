@@ -11,6 +11,7 @@ import { useAddWidgetStore } from "../../widget-store";
 import WidgetLogo from "../widget-logo";
 import { Button } from "@/components/ui/button";
 import { Step1 } from "../step1";
+import LineChartOptions from "../line-chart-options";
 
 const AddWidgetDialog = () => {
   const { addWidget, widgetId, setWidgetId } = useGridStore();
@@ -39,7 +40,7 @@ const AddWidgetDialog = () => {
   };
 
   const Step2 = useCallback(() => {
-    // if (data.type === "lineChart") return <LineChartOptions />;
+    if (data.type === "lineChart") return <LineChartOptions />;
     // if (data.type === "areaChart") return <LineChartOptions />;
     // if (data.type === "barChart") return <LineChartOptions />;
     // if (data.type === "pieChart") return <PieChartOptions />;

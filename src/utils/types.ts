@@ -35,7 +35,7 @@ export type DateRange = {
 };
 
 export type ChartTelemetry = {
-  cameraId: string;
+  serial: string;
   name: string;
   label?: string;
   unit?: string;
@@ -43,7 +43,7 @@ export type ChartTelemetry = {
 };
 
 export type GaugeWidgetData = {
-  cameraId: string;
+  serial: string;
   telemetryName: string;
   unit?: string;
   stops: {
@@ -53,3 +53,7 @@ export type GaugeWidgetData = {
 };
 
 export type WidgetCardType = (typeof widgetCardTypes)[number];
+
+export type LineChartWidgetData = {
+  telemetries?: ChartTelemetry[];
+};
