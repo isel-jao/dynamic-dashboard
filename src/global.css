@@ -21,6 +21,10 @@
   --radius: 0.5rem;
 }
 
+.second-path {
+  fill-opacity: 0.5;
+}
+
 :root,
 .light {
   --background: 0 0% 100%;
