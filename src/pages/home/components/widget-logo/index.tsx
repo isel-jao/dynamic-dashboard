@@ -46,7 +46,7 @@ export default function WidgetLogo({ type, className, ...props }: Props) {
       }}
       {...props}
     >
-      <div className="w-full aspect-square [&>*]:fill-card-foreground">
+      <div className="w-full aspect-square [&>*]:fill-card-foreground text-teal-500">
         {WidgetMap[type]}
       </div>
       <div className="text-center text-sm capitalize w-fit">{type}</div>
