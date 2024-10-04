@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Inter";
+  src: local("Inter"),
+    url("./assets/fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Menlo-for-Powerline";
+  src: local("Menlo-for-Powerline"),
+    url("./assets/fonts/Menlo-for-Powerline/Menlo for Powerline.ttf");
+}
+@font-face {
+  font-family: "Roboto";
+  src: local("Roboto"), url("./assets/fonts/Roboto/Roboto-Regular.ttf");
+}
+
+:root,
+.light {
+  --background: 240 6% 90%;
+  --foreground: 240 6% 10%;
+
+  --card: 240 5% 96%;
+  --card-foreground: 240 4% 16%;
+
+  --border: 216 12% 84%;
+  --primary: 239 84% 67%;
+  --primary-foreground: 0 0% 100%;
+
+  --danger: 0 84% 60%;
+  --danger-foreground: 0 0% 100%;
+
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 100%;
+
+  --success: 142 71% 45%;
+  --success-foreground: 0 0% 100%;
+
+  --info: 199 89% 48%;
+  --info-foreground: 0 0% 100%;
+
+  --border-radius: 0.5rem;
+}
+
+.dark {
+  --background: 240 6% 10%;
+  --foreground: 240 6% 90%;
+
+  --card: 240 4% 16%;
+  --card-foreground: 240 5% 96%;
+
+  --border: 240 5% 26%;
+}
+
+.debug {
+  border: 1px solid red !important;
+  & > * {
+    border: 1px solid blue !important;
+    & > * {
+      border: 1px solid green !important;
+    }
+  }
+}
+
+:root,
+body,
+main {
+  height: 100%;
+}
+
+body {
+  font-family: "Roboto";
+  @apply bg-background text-foreground;
+}
+
+@media (prefers-color-scheme: dark) {
+  body:not(.light) {
+    @apply dark;
+  }
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
